@@ -1,9 +1,9 @@
 # Private AKS
 
-This sample provides guidance and code to run a private AKS cluster. This solution builds on the great work from [Pavel Tuzov](https://github.com/patuzov/terraform-private-aks), and then modifies the solution to meet some of the requirements of our Azure Government customers. Some of the modifications to Pavel's original work include
+This sample provides guidance and code to run a [private AKS cluster](https://docs.microsoft.com/en-us/azure/aks/private-clusters). This solution builds on the great work from [Pavel Tuzov](https://github.com/patuzov/terraform-private-aks), and then modifies the solution to meet some of the requirements of our Azure Government customers. Some of the modifications to Pavel's original work include
 
 - Replace the Jumpbox VM with an Azure Container Instance running `azure-cloudshell` that is attached to the VNET
-  - Includes a premium file share volume mounted for persistent storage
+  - Includes a premium file share volume mounted for persistent storage.
 - [TODO](https://github.com/microsoft/federal-app-innovation/issues/37): Include a private Azure Container Registry (ACR)
 
 ## Architecture
@@ -22,7 +22,7 @@ The hub and spoke virtual networks are peered to support the traffic flow to/fro
 
 The following software needs to be installed on your local computer before you start.
 
-- Azure Subscription (commercial)
+- Azure Subscription (commercial or government)
 - [Azure CLI](https://docs.microsoft.com/en-us/cli/azure/install-azure-cli), v2.18 (or newer)
 - [Terraform](https://learn.hashicorp.com/tutorials/terraform/install-cli), v0.15.3
 - Azure provider 2.58.0
@@ -39,6 +39,8 @@ To get started, you need to perform the following tasks in order:
 ### Configure your environment
 
 Before deploying the Terraform template, you should modify `./private-aks/variables.tf` to customize your deployment. For example, you may want to change the location/region the template deploys or the version of AKS.
+
+> NOTE: For deployments into Azure Government subscriptions, you must set your region to `usgovvirginia` or `usgovarizona`.  These are the only two regions that support Azure Container Instances (ACI).  **Last verified on May 12, 2021**.
 
 ### Deploy the solution to Azure
 
