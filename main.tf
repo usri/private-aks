@@ -1,9 +1,9 @@
 terraform {
-  required_version = "= 0.14.9"
+  required_version = "= 0.15.3"
   required_providers {
     azurerm = {
       source  = "hashicorp/azurerm"
-      version = "=2.53.0"
+      version = "=2.58.0"
     }
   }
 }
@@ -15,11 +15,15 @@ provider "azurerm" {
 resource "azurerm_resource_group" "vnet" {
   name     = var.vnet_resource_group_name
   location = var.location
+
+  tags = var.tags
 }
 
 resource "azurerm_resource_group" "kube" {
   name     = var.kube_resource_group_name
   location = var.location
+
+  tags = var.tags
 }
 
 module "hub_network" {
@@ -42,6 +46,8 @@ module "hub_network" {
       service_endpoints : ["Microsoft.Storage"]
     }
   ]
+
+  tags = var.tags
 }
 
 module "kube_network" {
@@ -58,6 +64,8 @@ module "kube_network" {
       service_endpoints : []
     }
   ]
+
+  tags = var.tags
 }
 
 module "vnet_peering" {
@@ -124,6 +132,8 @@ resource "azurerm_kubernetes_cluster" "privateaks" {
   }
 
   depends_on = [module.routetable]
+
+  tags = var.tags
 }
 
 resource "azurerm_role_assignment" "netcontributor" {
@@ -140,5 +150,5 @@ module "containergroup" {
   vnet_id                 = module.hub_network.vnet_id
   subnet_id               = module.hub_network.subnet_ids["jumpbox-subnet"]
   dns_zone_resource_group = azurerm_kubernetes_cluster.privateaks.node_resource_group
-  dns_zone_name           = join(".", slice(split(".", azurerm_kubernetes_cluster.privateaks.private_fqdn), 1, length(split(".", azurerm_kubernetes_cluster.privateaks.private_fqdn)))) 
+  dns_zone_name           = join(".", slice(split(".", azurerm_kubernetes_cluster.privateaks.private_fqdn), 1, length(split(".", azurerm_kubernetes_cluster.privateaks.private_fqdn))))
 }
