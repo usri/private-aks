@@ -1,24 +1,24 @@
-variable resource_group_name {
+variable "resource_group_name" {
   description = "Resource Group name"
   type        = string
 }
 
-variable location {
+variable "location" {
   description = "Location in which to deploy the network"
   type        = string
 }
 
-variable vnet_name {
+variable "vnet_name" {
   description = "VNET name"
   type        = string
 }
 
-variable address_space {
+variable "address_space" {
   description = "VNET address space"
   type        = list(string)
 }
 
-variable subnets {
+variable "subnets" {
   description = "Subnets configuration"
   type = list(object({
     name              = string
@@ -26,4 +26,14 @@ variable subnets {
     delegations       = list(string)
     service_endpoints = list(string)
   }))
+}
+
+variable "tags" {
+  type = map(string)
+  default = {
+    "Environment" = "Test"
+    "Project"     = "PrivateAKS"
+    "BillingCode" = "Internal"
+  }
+  description = "Tags to be applied."
 }
