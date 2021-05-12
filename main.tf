@@ -152,3 +152,9 @@ module "containergroup" {
   dns_zone_resource_group = azurerm_kubernetes_cluster.privateaks.node_resource_group
   dns_zone_name           = join(".", slice(split(".", azurerm_kubernetes_cluster.privateaks.private_fqdn), 1, length(split(".", azurerm_kubernetes_cluster.privateaks.private_fqdn))))
 }
+
+module "acr" {
+  source                  = "./modules/acr"
+  resource_group          = azurerm_resource_group.vnet.name
+  location                = azurerm_resource_group.vnet.location
+}
