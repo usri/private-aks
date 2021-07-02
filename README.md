@@ -24,8 +24,7 @@ The following software needs to be installed on your local computer before you s
 
 - Azure Subscription (commercial or government)
 - [Azure CLI](https://docs.microsoft.com/en-us/cli/azure/install-azure-cli), v2.18 (or newer)
-- [Terraform](https://learn.hashicorp.com/tutorials/terraform/install-cli), v0.15.3
-- Azure provider 2.58.0
+- [Terraform](https://learn.hashicorp.com/tutorials/terraform/install-cli), v1.0.x
 
 This solution uses Terraform to describe and deploy a hub and spoke architecture.
 
