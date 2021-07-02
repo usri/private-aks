@@ -24,8 +24,9 @@ The following software needs to be installed on your local computer before you s
 
 - Azure Subscription (commercial or government)
 - [Azure CLI](https://docs.microsoft.com/en-us/cli/azure/install-azure-cli), v2.18 (or newer)
-- [Terraform](https://learn.hashicorp.com/tutorials/terraform/install-cli), v0.15.3
-- Azure provider 2.58.0
+- [Terraform](https://learn.hashicorp.com/tutorials/terraform/install-cli), v1.0.x
+
+> Deployment of this solution has been tested on _Ubuntu 18.04_, _Ubuntu 20.04_, and _Windows Server 2019 Datacenter_.
 
 This solution uses Terraform to describe and deploy a hub and spoke architecture.
 
@@ -47,9 +48,13 @@ Before deploying the Terraform template, you should modify `./private-aks/variab
 To deploy the solution, perform the following steps:
 
 ```bash
+# If deploying to an Azure Government subscription, then run this command
+az cloud set --name AzureUSGovernment
+
 # Login to your Azure Subscription
 az login
 
+# Make sure you're in the root folder of the repo
 cd ./private-aks
 
 # Deploy the solution
